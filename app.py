@@ -14,12 +14,11 @@ sc_y = joblib.load(SCALER_Y_PATH)
 @app.route('/predict_price', methods = ['GET'])
 def predict():
     args = request.args
-    open_plan = args.get('open_plan', default =-1, type=int)
     rooms = args.get('rooms', default =-1, type=int)
     area = args.get('area', default =-1, type=float)
     renovation = args.get('renovation', default =-1, type=float)
 
-    x = numpy.array([open_plan, rooms, area, renovation]).reshape(1,-1)
+    x = numpy.array([rooms, area, renovation]).reshape(1,-1)
     x = sc_x.transform(x)
 
     result = model.predict(x)
